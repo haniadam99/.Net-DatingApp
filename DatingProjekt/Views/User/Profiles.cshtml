@@ -1,0 +1,117 @@
+﻿@using DatingProjekt.Models;
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+@inject SignInManager<IdentityUser> signInManager
+@model DatingProjekt.Models.User
+@{
+    ViewData["Title"] = "Profil";
+}
+<h1>Profil</h1>
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orientation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => Model.Name)
+            </td>
+            <td>
+                @{var today = DateTime.Today;
+                    var age = today.Year - Model.Birthday.Year;
+                    if (Model.Birthday.Date > today.AddYears(-age)) age--;
+                    @Html.DisplayTextFor(model => age);
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Orientation)
+            </td>
+            <td>
+                <img src="~/images/@Model.ImagePath" alt="Alternative Text" style="height:100px; width:100px; border-radius: 25%;" asp-append-version="true">
+            </td>
+            <input value="@Model.UserId" id="id" name="id" type="hidden">
+
+        </tr>
+    </tbody>
+
+</table>
+
+@if (ViewBag.IsFriend)
+{
+    <div class="alert alert-success" role="alert" style="width: 15%;">
+        Ni är vänner
+    </div>
+
+    <div class="form-group">
+        <div style="width: 50%;" class="input-group">
+            <textarea style="min-width: 100%; width:100%" rows="5" id="add-post-message" required></textarea>
+        </div>
+        <div class="input-groupButton">
+            <input type="submit" onclick="apiPostMessage()" value="Publicera inlägg" class="btn btn-primary" id="postMessageBtn" />
+        </div>
+    </div>
+
+    <div class="col-md-2">
+        <input type="submit" onclick="location.href='@Url.Action("Index", "PostAPI", new {  id = Model.UserId })'" value="Se inlägg" />
+    </div>
+}
+else if (ViewBag.PendingFriend)
+{
+    <div class="alert alert-warning" role="alert" style="width: 15%;">
+        Vänförfrågan existerar redan
+    </div>
+}
+else
+{
+    @using (Html.BeginForm("SendRequest", "FriendRequests", FormMethod.Get))
+    {
+
+        <button type="submit" onclick="window.location='Profiles.cshtml" class="btn btn-primary" id="req">Skicka vänförfrågan</button>
+    }
+}
+
+
+@section scripts {
+
+    <script>
+        var savedProfile = @Html.Raw(Json.Serialize(Model));
+
+        function apiPostMessage() {
+            var textMessageArea = document.getElementById("add-post-message").value;
+            if (textMessageArea != "") {
+                var postedMessage = { Text: textMessageArea, Profile: savedProfile.userId }
+                $.ajax({
+                    url: '/api/PostAPI/AddMessage',
+                    type: 'POST',
+                    data: JSON.stringify(postedMessage),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: alert("Message posted! OBS! För att se meddelandet, logga in på profilen som meddelandet skickades till och tryck på My Profile.")
+                });
+            }
+        }
+    </script>
+}

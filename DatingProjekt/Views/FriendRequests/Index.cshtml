@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DatingProjekt.Models.User>
+@using DatingProjekt.Controllers
+
+
+@{
+    ViewData["Title"] = "Vänförfrågningar";
+}
+
+<h1>Vänförfrågningar</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/images/@item.ImagePath" alt="Alternative Text" style="height:95px; width:95px; border-radius: 25%;" asp-append-version="true">
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <div id="acceptbutton">
+                        <div class="form-group">
+                            @using (Html.BeginForm("Add", "Friends", new { request = item.UserId }, FormMethod.Post))
+                            {<input type="submit" value="Acceptera" class="btn btn-primary" />}
+                            </div>
+                        <div id="declinebutton">
+                            @using (Html.BeginForm("Delete", "FriendRequests", new { request = item.UserId }, FormMethod.Post))
+                            {<input type="submit" value="Neka" class="btn-danger" />}
+                        </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

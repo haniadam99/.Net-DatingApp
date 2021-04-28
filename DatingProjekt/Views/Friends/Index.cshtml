@@ -1,0 +1,53 @@
+﻿@model IEnumerable<DatingProjekt.Models.User>
+@using DatingProjekt.Controllers
+@{ ViewBag.Title = "Mina vänner"; }
+<div class="row">
+    <div class="col-lg-3">
+        <h2>
+            @ViewBag.Title
+        </h2>
+    </div>
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Namn
+        </th>
+        <th>
+            Ålder
+        </th>
+        <th>
+            Kön
+        </th>
+        <th>
+            Sexuel läggning
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @if (item.ImagePath != null)
+        {
+            <img src="~/images/@item.ImagePath" alt="Alternative Text" style="height:100px; width:100px; border-radius: 25%;" asp-append-version="true"> }
+        else
+        {
+            <img id="image_preview" type="image" src="~/Content/Images/imageUndefined.png" style="height:50px;width:50px; border-radius: 50%; outline: none;" alt="MyProfilePhoto">}
+    </td>
+    <td>@item.Name</td>
+    <td>@item.Birthday.ToShortDateString()</td>
+    <td>@item.Gender</td>
+    <td>@item.Orientation</td>
+    <td>
+        @Html.ActionLink("Se profil", "Profiles", "User", new { id = item.UserId }, new { @class = "btn btn-primary" })
+    </td>
+</tr>}
+
+</table>

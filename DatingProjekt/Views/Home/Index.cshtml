@@ -1,0 +1,43 @@
+﻿
+@model IEnumerable<DatingProjekt.Models.User>
+@using DatingProjekt.Controllers
+
+@{ ViewData["Title"] = "Välkommen!"; }
+
+<div class="row">
+
+    <div class="col-md-4">
+
+        @if (Model.Count() > 0)
+        {
+            <div class="text-center">
+                <h3 style="text-align:center">Klicka på en profil!</h3>
+            </div>
+
+        }
+    </div>
+
+</div>
+<div class="row">
+    <div class="col-md-8">
+        @{ foreach (var user in Model)
+            {
+                <div class="col-md-2">
+                        @if (user.ImagePath != null && User.Identity.IsAuthenticated)
+                        {
+                            <img id="image_preview" type="image" src="~/images/@user.ImagePath" class="img-thumbnail" alt="ProfilePicture" style="height:100px;width:100px; border-radius: 50%; outline: none;" asp-append-version="true" onclick="location.href='@Url.Action("Profiles", "User", new {  id = user.UserId })'"/>
+                            <button class="carousel-inner" onclick="location.href='@Url.Action("Profiles", "User", new {  id = user.UserId })'" />
+                        }
+
+                        else
+                        {
+                            <img id="image_preview" type="image" src="~/images/@user.ImagePath" class="img-thumbnail" alt="ProfilePicture" style="height:100px;width:100px; border-radius: 50%; outline: none;" asp-append-version="true" onclick="location.href='/Identity/Account/Login'"/>
+                            <button class="carousel-inner" onclick="location.href='/Identity/Account/Login'" />
+                        }
+                    <p style="text-align:center">@user.Name</p>
+
+                </div> 
+           }
+        }
+    </div>
+</div>

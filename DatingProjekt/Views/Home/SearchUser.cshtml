@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DatingProjekt.Models.User>
+@using DatingProjekt.Controllers
+@{ ViewBag.Title = "Sökresultat"; }
+<div class="row">
+    <div class="col-lg-3">
+        <h2>
+            @ViewBag.Title
+        </h2>
+    </div>
+</div>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            Namn
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        <img src="~/images/@item.ImagePath" alt="Alternative Text" style="height:100px; width:100px; border-radius: 25%;" asp-append-version="true">
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Se profil", "Profiles", "User", new { id = item.UserId }, new { @class = "btn btn-primary" })
+    </td>
+</tr>}
+    </tbody>
+</table>
+

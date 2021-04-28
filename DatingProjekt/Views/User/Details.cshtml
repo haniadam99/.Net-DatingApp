@@ -1,0 +1,57 @@
+﻿@model DatingProjekt.Models.User
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Min profil</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/images/@Model.ImagePath" alt="Alternative Text" style="height:200px; width:200px; border-radius: 25%;" asp-append-version="true">
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayName("Ålder")
+        </dt>
+        <dd class="col-sm-10">
+            @{var today = DateTime.Today;
+                var age = today.Year - Model.Birthday.Year;
+                if (Model.Birthday.Date > today.AddYears(-age)) age--;
+                @Html.DisplayTextFor(model => age);
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Orientation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Orientation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.VisibleSearch)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.VisibleSearch)
+        </dd>
+        <div class="col-md-2">
+            <input type="submit" onclick="location.href='@Url.Action("Index", "PostAPI", new {  id = Model.UserId })'" value="Se inlägg" />
+        </div>
+</dl>
+</div>
+

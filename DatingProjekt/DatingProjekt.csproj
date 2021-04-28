@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-DatingProjekt-C9D59EED-C579-4668-A250-57C112686C6C</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="bootstrap" Version="4.5.3" />
+    <PackageReference Include="entityframework" Version="6.4.4" />
+    <PackageReference Include="Grpc.Core" Version="2.34.0" />
+    <PackageReference Include="jQuery" Version="3.5.1" />
+    <PackageReference Include="jQuery.UI.Combined" Version="1.12.1" />
+    <PackageReference Include="jQuery.Validation" Version="1.19.2" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ContainerInstance.Fluent" Version="1.36.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent" Version="1.36.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.1" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
+    <PackageReference Include="Topshelf" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataLayer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>

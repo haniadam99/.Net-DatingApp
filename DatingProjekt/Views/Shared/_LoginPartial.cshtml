@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using DatingProjekt.Controllers;
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div id="search">
+            @using (Html.BeginForm("SearchUser", "Home", FormMethod.Get))
+            {
+                @Html.TextBox("name")<input type="submit" value="Search" />
+            }
+        </div>
+        <li class="nav-item">
+            <button id="details" onclick="Count()" type="submit" class="nav-link btn btn-link text-dark">Antal frågningar</button>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="User" asp-action="Index">Mina sidor</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logga ut</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Logga in</a>
+        </li>
+    }
+</ul>
+
+<script>
+    function Count() {
+        $(document).ready(function () {
+            $("#details").click(function (e) {
+                e.preventDefault();
+               var link = '@Url.Action("CountRequests", "FriendRequests")?par=' + $(this).val();
+               window.open(link, "", "width=200,height=100");
+
+            }
+            );
+        });
+    }
+</script>
+

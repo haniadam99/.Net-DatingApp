@@ -1,0 +1,73 @@
+﻿@model IEnumerable<DatingProjekt.Models.User>
+@using DatingProjekt.Controllers
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@{ViewData["Title"] = "Profilhanterare";}
+
+<div class="row">
+    <div class="col-lg-3">
+        <h2>
+            @ViewBag.Title
+        </h2>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ImagePath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Orientation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisibleSearch)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            @if (item.UserId.Equals(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+        <tr>
+            <td>
+                <img src="~/images/@item.ImagePath" alt="Alternative Text" style="height:100px; width:100px; border-radius: 25%;" asp-append-version="true">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orientation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisibleSearch)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.UserId">Min Profil</a> |
+                <a asp-controller="Friends" asp-action="Index" asp-route-id="@item.UserId">Mina Vänner</a> |
+                <a asp-controller="FriendRequests" asp-action="Index" asp-route-id="@item.UserId">Förfrågningar</a> |
+                <a asp-action="Edit" asp-route-id="@item.UserId">Redigera Profil</a> |
+                <a  asp-area="Identity" asp-page="/Account/Manage/Email" title="Manage">Kontoinställningar</a>
+            </tr>
+                }
+            }
+    </tbody>
+</table>
